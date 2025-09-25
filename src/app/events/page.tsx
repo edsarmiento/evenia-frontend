@@ -9,6 +9,7 @@ import { useState, useEffect } from 'react';
 import { EventService, type Event, type EventSearchParams } from '@/services/event.service';
 import { Card } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
+import { ImageWithFallback } from '@/components/ui/ImageWithFallback';
 
 export default function EventsPage() {
   const [events, setEvents] = useState<Event[]>([]);
@@ -165,10 +166,11 @@ export default function EventsPage() {
                 <div className="p-6" onClick={() => handleEventClick(event.id)}>
                   {event.cover_image_url && (
                     <div className="mb-4">
-                      <img
-                        src={`http://localhost:3000${event.cover_image_url}`}
+                      <ImageWithFallback
+                        src={event.cover_image_url}
                         alt={event.name}
                         className="w-full h-48 object-cover rounded-md"
+                        fallbackSrc="/placeholder-event.svg"
                       />
                     </div>
                   )}
