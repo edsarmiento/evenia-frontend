@@ -8,6 +8,12 @@ export const env = {
   API_BASE_URL: process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:3000/api',
   API_VERSION: process.env.NEXT_PUBLIC_API_VERSION || 'v1',
   
+  // AWS Configuration
+  AWS_ACCESS_KEY_ID: process.env.NEXT_PUBLIC_AWS_ACCESS_KEY_ID || '',
+  AWS_SECRET_ACCESS_KEY: process.env.NEXT_PUBLIC_AWS_SECRET_ACCESS_KEY || '',
+  AWS_REGION: process.env.NEXT_PUBLIC_AWS_REGION || 'us-east-2',
+  AWS_S3_BUCKET: process.env.NEXT_PUBLIC_AWS_S3_BUCKET || 'evenia-production',
+  
   // Environment
   APP_ENV: process.env.NODE_ENV || 'development',
   
