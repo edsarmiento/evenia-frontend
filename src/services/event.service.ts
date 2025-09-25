@@ -122,18 +122,25 @@ export class EventService {
       `${this.BASE_PATH}/featured`,
       { limit }
     );
-    return response.data;
+    return response;
   }
 
   /**
    * Get upcoming events
    */
   static async getUpcomingEvents(params?: PaginationParams): Promise<PaginatedResponse<Event>> {
-    const response = await apiClient.get<Event[]>(
+    const response = await apiClient.get<{ events: Event[]; pagination: any }>(
       `${this.BASE_PATH}/upcoming`,
       params
     );
-    return response as PaginatedResponse<Event>;
+    
+    // Transform the response to match our expected format
+    return {
+      data: response.events,
+      pagination: response.pagination,
+      success: true,
+      timestamp: new Date().toISOString(),
+    } as PaginatedResponse<Event>;
   }
 
   /**
@@ -143,11 +150,18 @@ export class EventService {
     category: string,
     params?: PaginationParams
   ): Promise<PaginatedResponse<Event>> {
-    const response = await apiClient.get<Event[]>(
+    const response = await apiClient.get<{ events: Event[]; pagination: any }>(
       `${this.BASE_PATH}/category/${category}`,
       params
     );
-    return response as PaginatedResponse<Event>;
+    
+    // Transform the response to match our expected format
+    return {
+      data: response.events,
+      pagination: response.pagination,
+      success: true,
+      timestamp: new Date().toISOString(),
+    } as PaginatedResponse<Event>;
   }
 
   /**
@@ -159,7 +173,7 @@ export class EventService {
     radius: number = 10,
     params?: PaginationParams
   ): Promise<PaginatedResponse<Event>> {
-    const response = await apiClient.get<Event[]>(
+    const response = await apiClient.get<{ events: Event[]; pagination: any }>(
       `${this.BASE_PATH}/nearby`,
       {
         latitude,
@@ -168,6 +182,13 @@ export class EventService {
         ...params,
       }
     );
-    return response as PaginatedResponse<Event>;
+    
+    // Transform the response to match our expected format
+    return {
+      data: response.events,
+      pagination: response.pagination,
+      success: true,
+      timestamp: new Date().toISOString(),
+    } as PaginatedResponse<Event>;
   }
 }

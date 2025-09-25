@@ -36,7 +36,7 @@ class ApiClient {
   private async request<T>(
     endpoint: string,
     config: RequestConfig
-  ): Promise<ApiResponse<T>> {
+  ): Promise<T> {
     const url = this.buildURL(endpoint, config.params);
     const requestConfig = this.buildRequestConfig(config);
 
@@ -87,9 +87,7 @@ class ApiClient {
       });
     }
     
-    const finalUrl = url.toString();
-    console.log('🔧 Building URL:', { endpoint, baseURL: this.baseURL, finalUrl });
-    return finalUrl;
+    return url.toString();
   }
 
   /**
@@ -172,35 +170,35 @@ class ApiClient {
   /**
    * GET request
    */
-  async get<T>(endpoint: string, params?: Record<string, any>): Promise<ApiResponse<T>> {
+  async get<T>(endpoint: string, params?: Record<string, any>): Promise<T> {
     return this.request<T>(endpoint, { method: 'GET', params });
   }
 
   /**
    * POST request
    */
-  async post<T>(endpoint: string, body?: any): Promise<ApiResponse<T>> {
+  async post<T>(endpoint: string, body?: any): Promise<T> {
     return this.request<T>(endpoint, { method: 'POST', body });
   }
 
   /**
    * PUT request
    */
-  async put<T>(endpoint: string, body?: any): Promise<ApiResponse<T>> {
+  async put<T>(endpoint: string, body?: any): Promise<T> {
     return this.request<T>(endpoint, { method: 'PUT', body });
   }
 
   /**
    * PATCH request
    */
-  async patch<T>(endpoint: string, body?: any): Promise<ApiResponse<T>> {
+  async patch<T>(endpoint: string, body?: any): Promise<T> {
     return this.request<T>(endpoint, { method: 'PATCH', body });
   }
 
   /**
    * DELETE request
    */
-  async delete<T>(endpoint: string): Promise<ApiResponse<T>> {
+  async delete<T>(endpoint: string): Promise<T> {
     return this.request<T>(endpoint, { method: 'DELETE' });
   }
 }
@@ -234,8 +232,6 @@ export const apiClient = new ApiClient({
   },
 });
 
-// Force cache bust - this will help debug the URL issue
-console.log('🔧 API Client initialized with baseURL:', `${env.API_BASE_URL}/${env.API_VERSION}`);
 
 
 // Log API calls in development
